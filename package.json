@@ -1,0 +1,11 @@
+{
+  "name": "netology_nodejs",
+  "version": "1.0.0",
+  "description": "Домашнее задание по курсу Нетологии-NodeJS",
+  "repository": "https://github.com/Vangiks/netology_nodejs.git",
+  "author": "Vyduikin <i.vyduikin@mkskom.ru>",
+  "license": "MIT",
+  "dependencies": {
+    "yargs": "^17.5.1"
+  }
+}
