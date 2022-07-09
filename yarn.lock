@@ -55,6 +55,13 @@ is-fullwidth-code-point@^3.0.0:
   resolved "https://registry.yarnpkg.com/is-fullwidth-code-point/-/is-fullwidth-code-point-3.0.0.tgz#f116f8064fe90b3f7844a38997c0b75051269f1d"
   integrity sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==
 
+netology_guess_number@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/netology_guess_number/-/netology_guess_number-1.0.0.tgz#cebf0894b45227c0cb163eaaac302189bbf6f247"
+  integrity sha512-MllDNYVWTLUEgqg1nSP1yVrNnzMXRfIyLKDpNjHkIWXD3hENKL04EbOwfuQaIKvyBx7C7gwYRzrwcs4Xdzh9sQ==
+  dependencies:
+    yargs "^17.5.1"
+
 require-directory@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/require-directory/-/require-directory-2.1.1.tgz#8c64ad5fd30dab1c976e2344ffe7f792a6a6df42"
