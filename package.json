@@ -6,7 +6,6 @@
   "author": "Vyduikin <i.vyduikin@mkskom.ru>",
   "license": "MIT",
   "dependencies": {
-    "netology_guess_number": "^1.0.0",
     "yargs": "^17.5.1"
   }
 }

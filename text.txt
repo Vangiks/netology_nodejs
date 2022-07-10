@@ -1,0 +1,13 @@
+result=ПОБЕДА!!!,countGame=1,countWin=1,countLose=0,procentWin=100
+result=Ничего, в следующий раз повезет!!!,countGame=2,countWin=1,countLose=1,procentWin=50
+result=Ничего, в следующий раз повезет!!!,countGame=3,countWin=1,countLose=2,procentWin=33.33333333333333
+result=Ничего, в следующий раз повезет!!!,countGame=4,countWin=1,countLose=3,procentWin=25
+result=Ничего, в следующий раз повезет!!!,countGame=5,countWin=1,countLose=4,procentWin=20
+result=Ничего, в следующий раз повезет!!!,countGame=6,countWin=1,countLose=5,procentWin=16.666666666666664
+result=ПОБЕДА!!!,countGame=7,countWin=2,countLose=5,procentWin=28.57142857142857
+result=Ничего, в следующий раз повезет!!!,countGame=8,countWin=2,countLose=6,procentWin=25
+result=Ничего, в следующий раз повезет!!!,countGame=9,countWin=2,countLose=7,procentWin=22.22222222222222
+result=ПОБЕДА!!!,countGame=10,countWin=3,countLose=7,procentWin=30
+result=ПОБЕДА!!!,countGame=11,countWin=4,countLose=7,procentWin=36.36363636363637
+result=ПОБЕДА!!!,countGame=12,countWin=5,countLose=7,procentWin=41.66666666666667
+result=Ничего, в следующий раз повезет!!!,countGame=13,countWin=5,countLose=8,procentWin=38.46153846153847
