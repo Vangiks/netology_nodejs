@@ -6,6 +6,7 @@
   "author": "Vyduikin <i.vyduikin@mkskom.ru>",
   "license": "MIT",
   "dependencies": {
-    "yargs": "^17.5.1"
+    "commander": "^9.3.0",
+    "dotenv": "^16.0.1"
   }
 }
