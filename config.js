@@ -1,5 +1,4 @@
 require('dotenv').config();
-console.log(process.env);
 
 const config = {
   HOST_WEATHERSTACK: process.env.HOST_WEATHERSTACK,

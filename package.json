@@ -5,8 +5,15 @@
   "repository": "https://github.com/Vangiks/netology_nodejs.git",
   "author": "Vyduikin <i.vyduikin@mkskom.ru>",
   "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "node index.js"
+  },
   "dependencies": {
-    "commander": "^9.3.0",
+    "commander": "^9.3.0"
+  },
+  "devDependencies": {
     "dotenv": "^16.0.1"
   }
 }

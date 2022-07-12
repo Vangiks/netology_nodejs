@@ -15,21 +15,35 @@ program
   .command('get')
   .description('Получить данные погоды')
   .argument('<query>', 'Параметр запроса', () => {}, '')
-  .option('-m, --mode <string>', 'Разные способы/моды (feature) получения погоды', 'current')
+  .option(
+    '-m, --mode <string>',
+    'Разные способы/моды (feature) получения погоды',
+    'current'
+  )
   .action(function (name, options) {
-    const query = `${config.HOST_WEATHERSTACK}/${options.mode}?access_key=${config.ACCESS_KEY_WEATHERSTACK}&query=${this.args[0]}`;
+    const url = `${config.HOST_WEATHERSTACK}/${options.mode}?access_key=${config.ACCESS_KEY_WEATHERSTACK}&query=${this.args[0]}`;
     http
-      .get(query, (resp) => {
+      .get(url, (response) => {
+        const { statusCode } = response;
+
+        if (statusCode !== 200) {
+          console.log(
+            `Ошибка при получении данных. Код ошибки = ${statusCode}`
+          );
+          return;
+        }
+        response.setEncoding('utf-8');
+
         let data = '';
-        resp.on('data', (chunk) => {
+        response.on('data', (chunk) => {
           data += chunk;
         });
-        resp.on('end', () => {
+        response.on('end', () => {
           console.log(JSON.parse(data));
         });
       })
-      .on('error', (err) => {
-        console.log('Error: ' + err.message);
+      .on('error', (error) => {
+        console.log('Error: ' + error.message);
       });
   });
 
