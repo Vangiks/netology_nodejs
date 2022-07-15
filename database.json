@@ -1,0 +1,100 @@
+{
+    "books": [
+        {
+            "id": "b0fec572-7dc2-4008-9050-93b8bb41fd7b",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "78d85e0b-0313-42f4-9ffe-d065c4b11fd1",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "036d134a-1343-432c-99b4-e51d6ce2fccd",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "de149f56-1c52-4886-9ff0-df332fc6b826",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС изменен",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "2c6fec62-62a2-4fc9-a0ce-5723f2020b80",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "a112e658-5d3a-4024-b316-3e941f15a8e8",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "3f6bd6d5-afe3-46aa-b2c2-292c353572c8",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "c53befee-5f35-4ff1-ac4a-49836105e8fa",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "0a751dca-fa30-4436-a2fb-6b2f24ac2516",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        },
+        {
+            "id": "f3771de9-21e6-4ff4-9972-7ab1cd8927cf",
+            "title": "Вот так 123",
+            "description": "Описание",
+            "authors": "Выдуйкин ИС",
+            "favorite": "Да",
+            "fileCover": "Ковер",
+            "fileName": "имя"
+        }
+    ],
+    "users": [
+        {
+            "id": 1,
+            "mail": "test@mail.ru"
+        }
+    ]
+}

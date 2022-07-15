@@ -1,0 +1,21 @@
+{
+  "name": "netology_nodejs",
+  "version": "1.0.0",
+  "description": "Домашнее задание по курсу Нетологии-NodeJS",
+  "repository": "https://github.com/Vangiks/netology_nodejs.git",
+  "author": "Vyduikin <i.vyduikin@mkskom.ru>",
+  "license": "MIT",
+  "main": "index.js",
+  "scripts": {
+    "start": "npx nodemon main.js",
+    "dev": "npx nodemon main.js"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "nodemon": "^2.0.19",
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "dotenv": "^16.0.1"
+  }
+}
