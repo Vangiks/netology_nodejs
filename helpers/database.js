@@ -1,9 +1,9 @@
-const fs = require('fs');
+const { createReadStream, writeFile } = require('fs');
 
 function read(path) {
   return new Promise((resolve, reject) => {
     let data = '';
-    const reader = fs.createReadStream(path);
+    const reader = createReadStream(path);
     reader.on('data', (chunk) => {
       data += chunk;
     });
@@ -30,32 +30,48 @@ function AddRecord(databasePath, table, record) {
   return readDatabase(databasePath)
     .then((database) => {
       database[table].push(record);
-      return fs.promises.writeFile(databasePath, JSON.stringify(database));
+      return writeFile(databasePath, JSON.stringify(database), (error) => {
+        if (error) throw new Error(error);
+      });
     })
     .then(() => record)
-    .catch(() => false);
+    .catch((error) => {
+      console.error(error);
+      return false;
+    });
 }
 
 function deleteRecord(databasePath, table, id) {
   return readDatabase(databasePath)
     .then((database) => {
       database[table] = database[table].filter((record) => record.id !== id);
-      return fs.promises.writeFile(databasePath, JSON.stringify(database));
+      return writeFile(databasePath, JSON.stringify(database), (error) => {
+        if (error) throw new Error(error);
+      });
     })
     .then(() => true)
-    .catch(() => false);
+    .catch((error) => {
+      console.error(error);
+      return false;
+    });
 }
 
-function updateRecord(databasePath, table, id, record) {
-  const newRecord = { ...record, id };
+function updateRecord(databasePath, table, id, data) {
+  let newRecord = null;
   return readDatabase(databasePath)
     .then((database) => {
       const index = database[table].findIndex((record) => record.id === id);
+      newRecord = { ...database[table][index], ...data, id };
       database[table][index] = newRecord;
-      return fs.promises.writeFile(databasePath, JSON.stringify(database));
+      return writeFile(databasePath, JSON.stringify(database), (error) => {
+        if (error) throw new Error(error);
+      });
     })
     .then(() => newRecord)
-    .catch(() => false);
+    .catch((error) => {
+      console.error(error);
+      return false;
+    });
 }
 
 module.exports = {
