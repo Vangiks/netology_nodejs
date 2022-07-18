@@ -7,8 +7,8 @@
   "license": "MIT",
   "main": "index.js",
   "scripts": {
-    "start": "npx nodemon main.js",
-    "dev": "npx nodemon main.js"
+    "start": "pm2 start main.js",
+    "dev": "nodemon main.js"
   },
   "dependencies": {
     "express": "^4.18.1",
@@ -16,6 +16,7 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
-    "dotenv": "^16.0.1"
+    "dotenv": "^16.0.1",
+    "pm2": "^5.2.0"
   }
 }
