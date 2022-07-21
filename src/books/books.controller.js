@@ -29,8 +29,12 @@ class BooksController {
   }
 
   async createBook(reques, response) {
-    const body = reques.body;
+    const file = reques?.file || null;
+    let body = reques.body;
     if (body) {
+      if (file) {
+        body = { ...body, fileName: file.originalname, fileBook: file.path };
+      }
       let result = await BooksService.createBook(body);
 
       if (result)
@@ -49,7 +53,7 @@ class BooksController {
         .send({ errors: ['Bad request'], response: null, status: false });
   }
 
-  async updateUser(reques, response) {
+  async updateBook(reques, response) {
     const id = reques.params?.id || '';
     const body = reques.body;
     if (id && body) {
@@ -110,10 +114,28 @@ class BooksController {
       });
   }
 
-  async isBook(id) {
+  async downloadBook(reques, response) {
+    const id = reques.params?.id || '';
     const books = await BooksService.getBooks();
-    const book = books.find((book) => book.id === id);
-    return book ? true : false;
+    if (id) {
+      const book = books.find((book) => book.id === id);
+      if (book)
+        if (book?.fileBook) {
+          return response.status(200).download(book.fileBook);
+        } else
+          return response.status(404).send({
+            errors: ['Books not found file'],
+            response: null,
+            status: false,
+          });
+      else
+        return response
+          .status(404)
+          .send({ errors: ['Book not found'], response: null, status: false });
+    } else if (!Array.isArray(books) || books?.length === 0)
+      return response
+        .status(404)
+        .send({ errors: ['Books not found'], response: null, status: false });
   }
 }
 

@@ -1,4 +1,5 @@
 const { v4: uuidv4 } = require('uuid');
+const { book: defaultBook } = require('./dto');
 const {
   readTable,
   AddRecord,
@@ -16,7 +17,7 @@ class BooksService {
   }
 
   createBook(book) {
-    const _book = { id: uuidv4(), ...book };
+    const _book = { ...defaultBook, id: uuidv4(), ...book };
     return AddRecord(this.databasePath, 'books', _book);
   }
 
