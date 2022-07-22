@@ -1,15 +1,23 @@
 const multer = require('multer');
 
 class File {
-  constructor(filename, destination) {
+  constructor(destination, filename = null, options = null) {
     this.filename = filename;
     this.destination = destination;
+    this.options = options;
     this.storage = multer.diskStorage({
-      destination(req, file, cb) {
+      destination: (req, file, cb) => {
         cb(null, destination);
       },
-      filename(req, file, cb) {
-        cb(null, file.originalname);
+      filename: (req, file, cb) => {
+        let name = file.originalname;
+        if (this.filename) {
+          name = this.filename;
+        }
+        if (this.options?.uniqueName) {
+          name = `${Date.now()}-${name}`;
+        }
+        cb(null, name);
       },
     });
   }

@@ -4,7 +4,7 @@ const express = require('express'),
   BooksController = require('./books.controller');
 
 const File = require('../../middleware/file');
-const file = new File('book', 'public/books/upload');
+const file = new File('public/books/upload', null, { uniqueName: true });
 
 router
   .route('/')
