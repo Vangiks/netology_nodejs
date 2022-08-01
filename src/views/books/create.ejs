@@ -1,0 +1,16 @@
+<%- include('../common/header', { title }) %>
+<%- include('../common/menu') %>
+
+        <h1>
+            <%= title %>
+        </h1>
+
+        <div class="row">
+            <div class="col-sm-6">
+
+                <%- include('form', {book}) %>
+
+            </div>
+        </div>
+
+<%- include('../common/footer') %>

@@ -1,4 +1,3 @@
-const path = require('path');
 const express = require('express'),
   router = express.Router(),
   BooksController = require('./books.controller');
@@ -7,16 +6,22 @@ const File = require('../../middleware/file');
 const file = new File('public/books/upload', null, { uniqueName: true });
 
 router
-  .route('/')
-  .get(BooksController.getBooks)
+  .route('/create')
+  .get(BooksController.create)
   .post(file.upload().single('fileBook'))
   .post(BooksController.createBook);
 
+router.route('/').get(BooksController.getBooks);
+
+router.route('/:id').get(BooksController.getBooks);
+
 router
-  .route('/:id')
-  .get(BooksController.getBooks)
-  .put(BooksController.updateBook)
-  .delete(BooksController.deleteBook);
+  .route('/:id/update')
+  .get(BooksController.changeBooks)
+  .post(file.upload().single('fileBook'))
+  .post(BooksController.updateBook);
+
+router.route('/:id/delete').post(BooksController.deleteBook);
 
 router.route('/:id/download').get(BooksController.downloadBook);
 

@@ -22,7 +22,8 @@ class BooksService {
   }
 
   updateBook(id, book) {
-    return updateRecord(this.databasePath, 'books', id, book);
+    const _book = { ...book, favorite: Boolean(book.favorite) };
+    return updateRecord(this.databasePath, 'books', id, _book);
   }
 
   deleteBook(id) {

@@ -1,31 +1,34 @@
 const BooksService = require('./books.service');
 
+const title = 'Книги';
+
 class BooksController {
   async getBooks(reques, response) {
     const id = reques.params?.id || '';
     const books = await BooksService.getBooks();
     if (id) {
       const book = books.find((book) => book.id === id);
-      if (book)
-        return response.status(200).send({
-          response: book,
-          errors: [],
-          status: true,
-        });
-      else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
+      if (book) response.render('books/view', { title, book });
+      else response.render('errors/404');
     } else if (!Array.isArray(books) || books?.length === 0)
-      return response
-        .status(404)
-        .send({ errors: ['Books not found'], response: null, status: false });
+      response.render('errors/404');
 
-    return response.status(200).send({
-      response: books,
-      errors: [],
-      status: true,
-    });
+    response.render('books/index', { title, books });
+  }
+
+  async changeBooks(reques, response) {
+    const id = reques.params?.id || '';
+    const books = await BooksService.getBooks();
+    if (id) {
+      const book = books.find((book) => book.id === id);
+      if (book) response.render('books/update', { title, book });
+      else response.render('errors/404');
+    } else if (!Array.isArray(books) || books?.length === 0)
+      response.render('errors/404');
+  }
+
+  async create(reques, response) {
+    response.render('books/create', { title, book: {} });
   }
 
   async createBook(reques, response) {
@@ -37,51 +40,28 @@ class BooksController {
       }
       let result = await BooksService.createBook(body);
 
-      if (result)
-        return response
-          .status(200)
-          .send({ errors: [], response: result, status: true });
-      else
-        return response.status(500).send({
-          errors: ['Unable create book'],
-          response: null,
-          status: false,
-        });
-    } else
-      return response
-        .status(400)
-        .send({ errors: ['Bad request'], response: null, status: false });
+      if (result) response.redirect('/books');
+      else response.render('errors/500');
+    } else response.render('errors/404');
   }
 
   async updateBook(reques, response) {
+    const file = reques?.file || null;
     const id = reques.params?.id || '';
-    const body = reques.body;
+    let body = reques.body;
     if (id && body) {
+      if (file) {
+        body = { ...body, fileName: file.originalname, fileBook: file.path };
+      }
       const books = await BooksService.getBooks();
       const book = books.find((book) => book.id === id);
       if (book) {
         let updateBook = await BooksService.updateBook(id, body);
 
-        if (updateBook)
-          return response
-            .status(200)
-            .send({ errors: [], response: updateBook, status: true });
-        else
-          return response.status(500).send({
-            errors: ['Unable update book'],
-            response: null,
-            status: false,
-          });
-      } else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
-    } else
-      return response.status(404).send({
-        errors: ['Bad request: Not id'],
-        response: null,
-        status: false,
-      });
+        if (updateBook) response.redirect(`/books/${book.id}`);
+        else response.render('errors/500');
+      } else response.render('errors/404');
+    } else response.render('errors/404');
   }
 
   async deleteBook(reques, response) {
@@ -92,26 +72,10 @@ class BooksController {
       if (book) {
         let result = await BooksService.deleteBook(id);
 
-        if (result)
-          return response
-            .status(200)
-            .send({ errors: [], response: 'OK', status: true });
-        else
-          return response.status(500).send({
-            errors: ['Unable delete book'],
-            response: null,
-            status: false,
-          });
-      } else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
-    } else
-      return response.status(404).send({
-        errors: ['Bad request: Not id'],
-        response: null,
-        status: false,
-      });
+        if (result) response.redirect('/books');
+        else response.render('errors/500');
+      } else response.render('errors/404');
+    } else response.render('errors/404');
   }
 
   async downloadBook(reques, response) {
@@ -122,20 +86,10 @@ class BooksController {
       if (book)
         if (book?.fileBook) {
           return response.status(200).download(book.fileBook);
-        } else
-          return response.status(404).send({
-            errors: ['Books not found file'],
-            response: null,
-            status: false,
-          });
-      else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
+        } else response.render('errors/404');
+      else response.render('errors/404');
     } else if (!Array.isArray(books) || books?.length === 0)
-      return response
-        .status(404)
-        .send({ errors: ['Books not found'], response: null, status: false });
+      response.render('errors/404');
   }
 }
 

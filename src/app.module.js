@@ -1,9 +1,9 @@
 const express = require('express'),
   router = express.Router(),
-  booksModule = require('./books/books.module'),
-  usersModule = require('./users/users.module');
+  booksModule = require('./books/books.module');
+// usersModule = require('./users/users.module');
 
 router.use('/books', booksModule.routes);
-router.use('/user', usersModule.routes);
+// router.use('/user', usersModule.routes);
 
 module.exports = router;

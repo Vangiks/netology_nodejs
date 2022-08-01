@@ -1,0 +1,38 @@
+<%- include('../common/header', {title}) %>
+<%- include('../common/menu') %>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="card">
+                <div class="card-body">
+
+                    <h5 class="card-title">
+                        <%= book.title %>
+                    </h5>
+                    <p class="card-text">
+                        Описание: <%= book.description %>
+                    </p>
+                    <p class="card-text">
+                        Автор: <%= book.authors %>
+                    </p>
+                    <p class="card-text">
+                        Избранное: <%= book.favorite %>
+                    </p>
+
+                    <div class="text-right">
+                        <a class="btn btn-sm btn-primary" href="/books/<%= book.id %>/update">
+                            <i class="fa fa-pencil" aria-hidden="true"></i>
+                        </a>
+                        <form action="/books/<%= book.id %>/delete" method="POST" class="d-inline">
+                            <button class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash" aria-hidden="true"></i>
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <%- include('../common/footer') %>
