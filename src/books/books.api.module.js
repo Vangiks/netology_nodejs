@@ -1,6 +1,6 @@
-const BooksController = require('./books.controller');
+const BooksController = require('./books.api.controller');
 const BooksService = require('./books.service');
-const BooksRoutes = require('./books.routes');
+const BooksRoutes = require('./books.api.routes');
 
 module.exports = {
   controllers: BooksController,

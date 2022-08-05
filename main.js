@@ -1,5 +1,6 @@
 const config = require('./config');
-const modules = require('./src/app.module');
+const modulesView = require('./src/app.view.module');
+const modulesApi = require('./src/app.api.module');
 const error = require('./middleware/error');
 
 const express = require('express'),
@@ -14,7 +15,8 @@ app.set('views', __dirname + '/src/views');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/', modules);
+// app.use('/api', modulesApi);
+app.use('/', modulesView);
 
 app.use(error);
 
