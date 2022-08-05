@@ -15,7 +15,7 @@ app.set('views', __dirname + '/src/views');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// app.use('/api', modulesApi);
+app.use('/api', modulesApi);
 app.use('/', modulesView);
 
 app.use(error);

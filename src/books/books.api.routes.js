@@ -1,7 +1,7 @@
 const path = require('path');
 const express = require('express'),
   router = express.Router(),
-  BooksController = require('./books.view.controller');
+  BooksController = require('./books.api.controller');
 
 const File = require('../../middleware/file');
 const file = new File('public/books/upload', null, { uniqueName: true });
