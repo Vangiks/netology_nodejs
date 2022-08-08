@@ -20,6 +20,6 @@ app.use('/', modulesView);
 
 app.use(error);
 
-app.listen(port, host, () =>
+app.listen(port, () =>
   console.log(`Server listens http://${host}:${port}`)
 );
