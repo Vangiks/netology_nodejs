@@ -5,10 +5,9 @@ const title = 'Книги';
 class BooksController {
   async getBooks(reques, response) {
     const id = reques.params?.id || '';
-    const books = await BooksService.getBooks();
+    const books = await BooksService.getBooks(id, { increase: true });
     if (id) {
-      const book = books.find((book) => book.id === id);
-      if (book) response.render('books/view', { title, book });
+      if (books) response.render('books/view', { title, book: books });
       else response.render('errors/404');
     } else if (!Array.isArray(books) || books?.length === 0)
       response.render('errors/404');
@@ -18,13 +17,9 @@ class BooksController {
 
   async changeBooks(reques, response) {
     const id = reques.params?.id || '';
-    const books = await BooksService.getBooks();
-    if (id) {
-      const book = books.find((book) => book.id === id);
-      if (book) response.render('books/update', { title, book });
-      else response.render('errors/404');
-    } else if (!Array.isArray(books) || books?.length === 0)
-      response.render('errors/404');
+    const book = await BooksService.getBooks(id);
+    if (book) response.render('books/update', { title, book });
+    else response.render('errors/404');
   }
 
   async create(reques, response) {
@@ -53,8 +48,7 @@ class BooksController {
       if (file) {
         body = { ...body, fileName: file.originalname, fileBook: file.path };
       }
-      const books = await BooksService.getBooks();
-      const book = books.find((book) => book.id === id);
+      const book = await BooksService.getBooks(id);
       if (book) {
         let updateBook = await BooksService.updateBook(id, body);
 
@@ -67,8 +61,7 @@ class BooksController {
   async deleteBook(reques, response) {
     const id = reques.params?.id || '';
     if (id) {
-      const books = await BooksService.getBooks();
-      const book = books.find((book) => book.id === id);
+      const book = await BooksService.getBooks(id);
       if (book) {
         let result = await BooksService.deleteBook(id);
 
@@ -80,16 +73,12 @@ class BooksController {
 
   async downloadBook(reques, response) {
     const id = reques.params?.id || '';
-    const books = await BooksService.getBooks();
-    if (id) {
-      const book = books.find((book) => book.id === id);
-      if (book)
-        if (book?.fileBook) {
-          return response.status(200).download(book.fileBook);
-        } else response.render('errors/404');
-      else response.render('errors/404');
-    } else if (!Array.isArray(books) || books?.length === 0)
-      response.render('errors/404');
+    const book = await BooksService.getBooks(id);
+    if (book)
+      if (book?.fileBook) {
+        return response.status(200).download(book.fileBook);
+      } else response.render('errors/404');
+    else response.render('errors/404');
   }
 }
 

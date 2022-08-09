@@ -18,6 +18,9 @@
                     <p class="card-text">
                         Избранное: <%= book.favorite %>
                     </p>
+                    <p class="card-text">
+                        Счетчик просмотра книги: <%= book.counter %>
+                    </p>
 
                     <div class="text-right">
                         <a class="btn btn-sm btn-primary" href="/books/<%= book.id %>/update">

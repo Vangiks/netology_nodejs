@@ -1,0 +1,31 @@
+version: '3.9'
+services:
+  storage:
+    image: 'redis:7.0.4-alpine'
+    volumes:
+      - redis_data:/data
+    restart: on-failure
+    ports:
+      - '6379:6379'
+      - '8001:8001'
+  counter-books:
+    image: vangiks/counter-books:1.0.0
+    ports:
+      - '3002:3002'
+    environment:
+      - PORT=3002
+      - REDIS_HOST=redis://storage
+    depends_on:
+      - storage
+  library:
+    build: .
+    ports:
+      - '3000:3000'
+    environment:
+      - PORT=3000
+      - APP_COUNTER_BOOKS_HOST=http://counter-books
+    depends_on:
+      - counter-books
+
+volumes:
+  redis_data: {}

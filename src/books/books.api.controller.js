@@ -3,24 +3,14 @@ const BooksService = require('./books.service');
 class BooksController {
   async getBooks(reques, response) {
     const id = reques.params?.id || '';
-    const books = await BooksService.getBooks();
-    if (id) {
-      const book = books.find((book) => book.id === id);
-      if (book)
-        return response.status(200).send({
-          response: book,
-          errors: [],
-          status: true,
-        });
-      else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
-    } else if (!Array.isArray(books) || books?.length === 0)
-      return response
-        .status(404)
-        .send({ errors: ['Books not found'], response: null, status: false });
-
+    const books = await BooksService.getBooks(id, { increase: true });
+    if (!books) {
+      return response.status(404).send({
+        errors: ['Book/Books not found'],
+        response: null,
+        status: false,
+      });
+    }
     return response.status(200).send({
       response: books,
       errors: [],
@@ -57,8 +47,7 @@ class BooksController {
     const id = reques.params?.id || '';
     const body = reques.body;
     if (id && body) {
-      const books = await BooksService.getBooks();
-      const book = books.find((book) => book.id === id);
+      const book = await BooksService.getBooks(id);
       if (book) {
         let updateBook = await BooksService.updateBook(id, body);
 
@@ -87,8 +76,7 @@ class BooksController {
   async deleteBook(reques, response) {
     const id = reques.params?.id || '';
     if (id) {
-      const books = await BooksService.getBooks();
-      const book = books.find((book) => book.id === id);
+      const book = await BooksService.getBooks(id);
       if (book) {
         let result = await BooksService.deleteBook(id);
 
@@ -116,26 +104,16 @@ class BooksController {
 
   async downloadBook(reques, response) {
     const id = reques.params?.id || '';
-    const books = await BooksService.getBooks();
-    if (id) {
-      const book = books.find((book) => book.id === id);
-      if (book)
-        if (book?.fileBook) {
-          return response.status(200).download(book.fileBook);
-        } else
-          return response.status(404).send({
-            errors: ['Books not found file'],
-            response: null,
-            status: false,
-          });
-      else
-        return response
-          .status(404)
-          .send({ errors: ['Book not found'], response: null, status: false });
-    } else if (!Array.isArray(books) || books?.length === 0)
-      return response
-        .status(404)
-        .send({ errors: ['Books not found'], response: null, status: false });
+    const book = await BooksService.getBooks(id);
+    if (book)
+      if (book?.fileBook) {
+        return response.status(200).download(book.fileBook);
+      } else
+        return response.status(404).send({
+          errors: ['Book not found file'],
+          response: null,
+          status: false,
+        });
   }
 }
 

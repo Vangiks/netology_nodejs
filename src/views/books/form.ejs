@@ -25,6 +25,11 @@
     </div>
 
     <div class="form-group">
+        <label for="counter">Количество просмотра книг</label>
+        <input type="number" disabled value="<%= book.counter %>" name="counter" class="form-control">
+    </div>
+
+    <div class="form-group">
         <label for="fileCover">Обложка файла</label>
         <input type="text" value="<%= book.fileCover %>" name="fileCover" class="form-control" id="fileCover">
     </div>

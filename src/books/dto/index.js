@@ -7,6 +7,7 @@ const book = {
   fileCover: '',
   fileName: '',
   fileBook: '',
+  counter: 0,
 };
 
 module.exports = { book };
