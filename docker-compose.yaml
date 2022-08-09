@@ -18,12 +18,12 @@ services:
     depends_on:
       - storage
   library:
-    build: .
+    image: vangiks/library:1.0.1
     ports:
       - '3000:3000'
     environment:
       - PORT=3000
-      - APP_COUNTER_BOOKS_HOST=http://counter-books
+      - APP_COUNTER_BOOKS_HOST=http://counter-books:3002
     depends_on:
       - counter-books
 
