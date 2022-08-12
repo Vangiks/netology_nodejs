@@ -9,7 +9,7 @@ class BooksController {
     if (id) {
       if (books) response.render('books/view', { title, book: books });
       else response.render('errors/404');
-    } else if (!Array.isArray(books) || books?.length === 0)
+    } else if (!Array.isArray(books))
       response.render('errors/404');
 
     response.render('books/index', { title, books });
