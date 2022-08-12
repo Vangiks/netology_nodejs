@@ -1,11 +1,4 @@
-const { v4: uuidv4 } = require('uuid');
-const { book: defaultBook } = require('./dto');
-const {
-  readTable,
-  AddRecord,
-  deleteRecord,
-  updateRecord,
-} = require('../../helpers/database');
+const Books = require('./dto');
 const config = require('../../config');
 
 const CounterBook = require('../../services/counter');
@@ -17,36 +10,53 @@ class BooksService {
   }
 
   async getBooks(id, options = { increase: false }) {
-    const books = await readTable(this.databasePath, 'books');
-    if (id) {
-      const book = books.find((book) => book.id === id);
-      let counter = 0;
-      if (options.increase) {
-        counter = await this.counterBook.icreaseCounter(book.id);
+    try {
+      if (id) {
+        const book = await Books.findById(id).select('-__v');
+        let counter = 0;
+        if (options.increase) {
+          counter = await this.counterBook.icreaseCounter(book.id);
+        }
+        counter = await this.counterBook.getCounter(book.id);
+
+        book.counter = counter;
+        return book;
+      } else {
+        const books = await Books.find().select('-__v');
+        return books;
       }
-      counter = await this.counterBook.getCounter(book.id);
-
-      book.counter = counter;
-      return book;
+    } catch (error) {
+      console.log(error.message);
+      return null;
     }
-    return books;
   }
 
-  createBook(book) {
-    // TODO validate
-    delete book.counter;
-
-    const _book = { ...defaultBook, id: uuidv4(), ...book };
-    return AddRecord(this.databasePath, 'books', _book);
+  async createBook(book) {
+    try {
+      return await new Books(book).save();
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
   }
 
-  updateBook(id, book) {
-    const _book = { ...book, favorite: Boolean(book.favorite) };
-    return updateRecord(this.databasePath, 'books', id, _book);
+  async updateBook(id, book) {
+    try {
+      return await Books.findByIdAndUpdate(id, book, { new: true });
+    } catch (error) {
+      console.log(error.message);
+      return null;
+    }
   }
 
-  deleteBook(id) {
-    return deleteRecord(this.databasePath, 'books', id);
+  async deleteBook(id) {
+    try {
+      const filter = { _id: id };
+      return await Books.deleteOne(filter);
+    } catch (error) {
+      console.log(error.message);
+      return false;
+    }
   }
 }
 

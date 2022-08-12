@@ -8,6 +8,28 @@ services:
     ports:
       - '6379:6379'
       - '8001:8001'
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo_data:/data
+    restart: always
+    ports:
+      - '27017:27017'
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+
   counter-books:
     image: vangiks/counter-books:1.0.0
     ports:
@@ -17,15 +39,19 @@ services:
       - REDIS_HOST=redis://storage
     depends_on:
       - storage
+
   library:
-    image: vangiks/library:1.0.1
+    build: .
     ports:
       - '3000:3000'
     environment:
       - PORT=3000
       - APP_COUNTER_BOOKS_HOST=http://counter-books:3002
+      - DATABASE_PATH=mongodb://root:example@mongo:27017/
     depends_on:
       - counter-books
+      - mongo
 
 volumes:
   redis_data: {}
+  mongo_data: {}
