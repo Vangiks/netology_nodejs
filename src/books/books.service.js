@@ -1,4 +1,4 @@
-const Books = require('./dto');
+const Books = require('./model');
 const config = require('../../config');
 
 const CounterBook = require('../../services/counter');
