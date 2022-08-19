@@ -1,0 +1,12 @@
+<%- include('../common/header', {title}) %>
+<%- include('../common/menu') %>
+
+<p>
+    <b>Username:</b>   <%= user.username %><br />
+    <b>Name:</b>       <%= user.fullname %><br />
+    <% if (user.emails) { %>
+        <b>Email:</b>  <%= user.emails[0] %><br />
+    <% } %>
+</p>
+<a href="/user/logout">Выйти</a>
+    <%- include('../common/footer') %>

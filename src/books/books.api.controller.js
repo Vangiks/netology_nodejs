@@ -25,7 +25,7 @@ class BooksController {
       if (file) {
         body = { ...body, fileName: file.originalname, fileBook: file.path };
       }
-      let result = await BooksService.createBook(body);
+      const result = await BooksService.createBook(body);
 
       if (result)
         return response

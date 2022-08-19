@@ -1,0 +1,19 @@
+<%- include('../common/header', {title: title}) %>
+<%- include('../common/menu') %>
+
+<!-- Pills navs -->
+<%- include('tabs') %>
+  <!-- Pills navs -->
+  
+  <!-- Pills content -->
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
+        <%- include('login') %>
+    </div>
+    <div class="tab-pane fade" id="pills-register" role="tabpanel" aria-labelledby="tab-register">
+        <%- include('signup') %>
+    </div>
+  </div>
+  <!-- Pills content -->
+
+  <%- include('../common/footer') %>

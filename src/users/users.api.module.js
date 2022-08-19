@@ -1,6 +1,6 @@
-const UsersController = require('./users.controller');
+const UsersController = require('./users.api.controller');
 const UsersService = require('./users.service');
-const UsersRoutes = require('./users.routes');
+const UsersRoutes = require('./users.api.routes');
 
 module.exports = {
   controllers: UsersController,
