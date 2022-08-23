@@ -41,7 +41,7 @@ services:
       - storage
 
   library:
-    image: vangiks/library:1.0.3
+    image: vangiks/library:1.0.4
     ports:
       - '3000:3000'
     environment:
