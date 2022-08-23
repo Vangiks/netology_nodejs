@@ -1,41 +1,112 @@
 <%- include('../common/header', {title}) %>
-<%- include('../common/menu') %>
+    <%- include('../common/menu') %>
 
-    <div class="row">
-        <div class="col-sm-8">
-            <div class="card">
-                <div class="card-body">
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="card">
+                    <div class="card-body">
 
-                    <h5 class="card-title">
-                        <%= book.title %>
-                    </h5>
-                    <p class="card-text">
-                        Описание: <%= book.description %>
-                    </p>
-                    <p class="card-text">
-                        Автор: <%= book.authors %>
-                    </p>
-                    <p class="card-text">
-                        Избранное: <%= book.favorite %>
-                    </p>
-                    <p class="card-text">
-                        Счетчик просмотра книги: <%= book.counter %>
-                    </p>
+                        <h5 class="card-title">
+                            <%= book.title %>
+                        </h5>
+                        <p class="card-text">
+                            Описание: <%= book.description %>
+                        </p>
+                        <p class="card-text">
+                            Автор: <%= book.authors %>
+                        </p>
+                        <p class="card-text">
+                            Избранное: <%= book.favorite %>
+                        </p>
+                        <p class="card-text">
+                            Счетчик просмотра книги: <%= book.counter %>
+                        </p>
 
-                    <div class="text-right">
-                        <a class="btn btn-sm btn-primary" href="/books/<%= book.id %>/update">
-                            <i class="fa fa-pencil" aria-hidden="true"></i>
-                        </a>
-                        <form action="/books/<%= book.id %>/delete" method="POST" class="d-inline">
-                            <button class="btn btn-sm btn-danger">
-                                <i class="fa fa-trash" aria-hidden="true"></i>
-                            </button>
-                        </form>
+                        <div class="text-right">
+                            <a class="btn btn-sm btn-primary" href="/books/<%= book.id %>/update">
+                                <i class="fa fa-pencil" aria-hidden="true"></i>
+                            </a>
+                            <form action="/books/<%= book.id %>/delete" method="POST" class="d-inline">
+                                <button class="btn btn-sm btn-danger">
+                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                </button>
+                            </form>
+                        </div>
+
                     </div>
-
                 </div>
             </div>
         </div>
-    </div>
+        <section style="background-color: #eee;">
+            <div class="container py-5">
 
-    <%- include('../common/footer') %>
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-8 col-lg-6 col-xl-4">
+
+                        <div class="card" id="chat1" style="border-radius: 15px;">
+                            <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                                style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                                <p class="mb-0 fw-bold">Live chat</p>
+                                <span id="chat-username" class="mb-0 fw-bold">
+                                    <%= user %>
+                                </span>
+                            </div>
+                            <div id="chat-list" class="card-body">
+
+
+                                <div class="form-outline mb-3">
+                                    <textarea id="chat-text" class="form-control" rows="4"></textarea>
+                                </div>
+                                <button type="submit" id="chat-send" class="btn btn-primary">Отправить</button>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <script>
+            const roomName = location.pathname.split('/').pop();
+            const socket = io.connect('/', { query: `roomName=${roomName}` });
+
+            socket.on("connect_error", (err) => {
+                console.log(`connect_error due to ${err.message}`);
+            });
+
+            const boxList = document.getElementById('chat-list');
+            const inputText = document.getElementById('chat-text');
+            const sendRoom = document.getElementById('chat-send');
+            const username = document.getElementById('chat-username').outerText;
+
+            const getTmp = (msg) => {
+                return `
+                <div class="d-flex flex-row align-items-center justify-content-${username === msg.username ? 'end' : 'start'} mb-4">
+                                    <span class="mr-3">${msg.username}</span>
+                                    <div class="p-3 ms-3"
+                                        style="border-radius: 15px; background-color: rgba(57, 192, 237,.2);">
+                                        <p class="small mb-0">${msg.text}</p>
+                                    </div>
+                                </div>
+            `;
+            };
+
+            socket.on('message-to-room', (msg) => {
+                const div = getTmp(msg)
+                boxList.insertAdjacentHTML('beforebegin', div)
+            });
+
+            sendRoom.addEventListener('click', () => {
+                socket.emit('message-to-room', {
+                    username,
+                    text: inputText.value,
+                })
+                inputText.value = '';
+            })
+
+
+        </script>
+
+        <%- include('../common/footer') %>
