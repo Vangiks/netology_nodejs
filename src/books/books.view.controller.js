@@ -7,12 +7,15 @@ class BooksController {
     const id = reques.params?.id || '';
     const books = await BooksService.getBooks(id, { increase: true });
     if (id) {
-      if (books) response.render('books/view', { title, book: books });
+      if (books)
+        response.render('books/view', {
+          title,
+          book: books,
+          user: reques?.user?.fullname || 'Аноним',
+        });
       else response.render('errors/404');
-    } else if (!Array.isArray(books))
-      response.render('errors/404');
-
-    response.render('books/index', { title, books });
+    } else if (!Array.isArray(books)) response.render('errors/404');
+    else response.render('books/index', { title, books });
   }
 
   async changeBooks(reques, response) {
